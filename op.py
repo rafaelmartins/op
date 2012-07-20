@@ -1,15 +1,30 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
+    op
+    ~~
+
+    Main module.
+
+    :copyright: (c) 2012 by Rafael Goncalves Martins
+    :license: BSD, see LICENSE for more details.
+"""
 
 from argparse import ArgumentParser
 from codecs import open
 from ConfigParser import ConfigParser
-from httplib2 import Http
 from urllib import urlencode
 
 import json
 import os
 import sys
+
+try:
+    from httplib2 import Http
+except ImportError:
+    # if imported from setup.py, it probably just wants the version,
+    # and will not run anny httplib2-dependent code.
+    if __name__ == '__main__':
+        raise
 
 __version__ = '0.1'
 
@@ -19,10 +34,6 @@ class ConfigError(Exception):
 
 
 class ApiError(Exception):
-    pass
-
-
-class CommandError(Exception):
     pass
 
 
@@ -280,7 +291,7 @@ def main():
                      help='save paste to file, instead of output to STDOUT')
     get.set_defaults(callback=commands.get)
 
-    modify = actions.add_parser('modify', help='modify a paste')
+    modify = actions.add_parser('mod', help='modify a paste')
     modify.add_argument('-l', '--language', dest='language', metavar='LANG',
                         help='modify language alias')
     modify.add_argument('-f', '--file-name', dest='file_name',
@@ -293,16 +304,16 @@ def main():
                                    action='store_false',
                                    help='mark paste as public')
     modify.add_argument('-r', '--raw', dest='raw', action='store_true',
-                     help='show link to raw paste, instead of HTML page')
+                        help='show link to raw paste, instead of HTML page')
     modify.add_argument('paste_id', metavar='PASTE_ID',
                         help='identifier of the paste to be modified ' \
                         '(public or private)')
     modify.add_argument('file', nargs='?', metavar='FILE',
-                     help='file to be used as new content for the paste, ' \
-                     'defaults to STDIN or nothing')
+                        help='file to be used as new content for the paste, ' \
+                        'defaults to STDIN or nothing')
     modify.set_defaults(callback=commands.modify)
 
-    delete = actions.add_parser('delete', help='delete a paste')
+    delete = actions.add_parser('del', help='delete a paste')
     delete.add_argument('paste_id', metavar='PASTE_ID',
                         help='identifier of the paste to be deleted (public ' \
                         'or private)')
