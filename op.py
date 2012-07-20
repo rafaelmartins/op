@@ -261,6 +261,8 @@ def main():
     commands = Commands()
 
     parser = ArgumentParser(description='ownpaste client')
+    parser.add_argument('--version', action='version', version='%(prog)s ' +
+                        __version__)
     parser.add_argument('-c', '--config-file', dest='config_file',
                         metavar='FILE', default=os.path.expanduser('~/.oprc'),
                         help="configuration file, overrides `~/.oprc'")
