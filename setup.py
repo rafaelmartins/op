@@ -1,15 +1,14 @@
 #!/usr/bin/env python
 
-from setuptools import find_packages, setup
+from setuptools import setup
 import os
-import sys
 
 from op import __version__
 
 cwd = os.path.dirname(os.path.abspath(__file__))
 
 long_description = ''
-with open(os.path.join(cwd, 'README')) as fp:
+with open(os.path.join(cwd, 'README.rst')) as fp:
     long_description = fp.read()
 
 setup(
